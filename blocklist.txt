@@ -1,0 +1,6 @@
+# URLs to permanently exclude from the dashboard.
+# Add one URL per line. The scraper will skip these even if they pass the VJ and date filters.
+# Format: https://www.bbc.co.uk/news/resources/idt-{uuid}
+
+# Not a scrollytelling piece (BBC Visual and Data Journalism team, not VJ scrolly)
+https://www.bbc.co.uk/news/resources/idt-2d84756f-4264-4be0-8f84-63125570e286
