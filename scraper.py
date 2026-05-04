@@ -113,6 +113,18 @@ def extract_metadata(url, html):
             or meta(name="DC.date")
         )
 
+    # Last resort: parse a visible date like "17 January 2025" from page text
+    if not published_date:
+        date_match = re.search(
+            r'\b(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(202\d)\b',
+            soup.get_text()
+        )
+        if date_match:
+            try:
+                published_date = datetime.strptime(date_match.group(), "%d %B %Y").replace(tzinfo=timezone.utc).isoformat()
+            except ValueError:
+                pass
+
     # Thumbnail from og:image
     og_image = soup.find("meta", property="og:image")
     thumbnail = (og_image.get("content") or "").strip() if og_image else None
@@ -137,7 +149,6 @@ def extract_metadata(url, html):
     }
     article["topics"] = classify_topics(article)
     article["components"] = detect_components(html)
-    return article
     return article
 
 

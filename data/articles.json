@@ -599,6 +599,19 @@
     "components": []
   },
   {
+    "url": "https://www.bbc.co.uk/news/resources/idt-7391e1a7-968a-4cf3-aa2a-d79c0ff994c3",
+    "title": "Fighting LA's fires from the sky\n",
+    "subtitle": "How helicopter crews are fighting wildfires in Los Angeles",
+    "published_date": "2025-01-17T00:00:00+00:00",
+    "thumbnail": "https://ichef.bbci.co.uk/images/ic/raw/p0kkbfzw.png",
+    "byline": "By Kayla Epstein and the Visual Journalism team",
+    "discovered_at": "2026-05-04T18:28:13.023707+00:00",
+    "topics": [
+      "World"
+    ],
+    "components": []
+  },
+  {
     "url": "https://www.bbc.co.uk/news/resources/idt-6789cf28-d4de-4dfd-9f4f-cf51ef1d6a54",
     "title": "Los Angeles wildfires: in pictures",
     "subtitle": "Powerful images of destruction, loss and heroism",
@@ -622,19 +635,6 @@
     "discovered_at": "2026-05-04T12:29:26.706307+00:00",
     "topics": [
       "In pictures",
-      "World"
-    ],
-    "components": []
-  },
-  {
-    "url": "https://www.bbc.co.uk/news/resources/idt-2d84756f-4264-4be0-8f84-63125570e286",
-    "title": "Maharashtra assembly election results 2024",
-    "subtitle": "Counting of results begin at 8:00 local time (3:30 GMT) on Saturday, 23rd November.",
-    "published_date": "2024-11-23T20:51:29.869Z",
-    "thumbnail": "https://news.files.bbci.co.uk/include/vjsthasia/2578-maharashtra-elections-2024/assets/app-project-assets/img/MH_Thumbnail_976x549.webp",
-    "byline": "By BBC Visual and Data Journalism Team",
-    "discovered_at": "2026-05-04T17:59:18.214395+00:00",
-    "topics": [
       "World"
     ],
     "components": []
