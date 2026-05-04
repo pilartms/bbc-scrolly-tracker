@@ -1,7 +1,8 @@
-# BBC Visual Journalism scrollytelling seed URLs
-# Add one URL per line. The scraper follows cross-links to find more automatically.
+# BBC Visual Journalism scrollytelling seed URLs — static baseline built 2026-05-04.
+# The scraper now queries the Wayback Machine CDX API automatically on each run,
+# so this file does not need to be updated manually. It acts as a fallback in case
+# the CDX API is unavailable.
 # Format: https://www.bbc.co.uk/news/resources/idt-{uuid}
-# Source: Wayback Machine CDX API (from=20250101), cleaned 2026-05-04
 https://www.bbc.co.uk/news/resources/idt-0192822d-14f1-432b-bd25-92eab6466362
 https://www.bbc.co.uk/news/resources/idt-02b44e78-2da1-4a27-bcc5-dd0de5f38b20
 https://www.bbc.co.uk/news/resources/idt-02d9060e-15dc-426c-bfe0-86a6437e5234

@@ -1,6 +1,6 @@
 # BBC Scrolly Tracker
 
-A weekly-updated index of BBC Visual Journalism scrollytelling articles published since November 2024. The scraper discovers articles automatically by following cross-links between pieces, extracts metadata, and detects interactive components (3D, scrollable video, autoplay video). Results are published as a filterable dashboard via GitHub Pages.
+A weekly-updated index of BBC Visual Journalism scrollytelling articles published since November 2024. New articles are discovered each week by querying the Wayback Machine CDX API for BBC `idt-` URLs, supplemented by following cross-links between pieces. The scraper extracts metadata, filters for Visual Journalism bylines, and detects interactive components (3D, scrollable video, autoplay video). Results are published as a filterable dashboard via GitHub Pages.
 
 Built as part of the **Advanced Prompt Engineering for Journalists** MOOC, taught by Joe Amditis (Center for Cooperative Media).
 

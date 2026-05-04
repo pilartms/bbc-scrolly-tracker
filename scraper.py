@@ -17,6 +17,7 @@ SEEDS_FILE = "seeds.txt"
 DATA_FILE = "data/articles.json"
 IDT_PATTERN = re.compile(r"idt-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
 BBC_BASE = "https://www.bbc.co.uk"
+CDX_API = "http://web.archive.org/cdx/search/cdx"
 SLEEP_SECONDS = 2
 PUBLISHED_AFTER = datetime(2024, 11, 6, tzinfo=timezone.utc)
 
@@ -207,18 +208,54 @@ def is_after_cutoff(article):
         return False
 
 
+def fetch_cdx_urls():
+    """Query Wayback Machine CDX API for BBC idt- URLs archived since the cutoff date."""
+    print("Querying Wayback Machine CDX API…")
+    params = {
+        "url": "bbc.co.uk/news/resources/idt-*",
+        "output": "json",
+        "fl": "original",
+        "collapse": "urlkey",
+        "from": PUBLISHED_AFTER.strftime("%Y%m%d"),
+        "limit": 5000,
+    }
+    try:
+        resp = requests.get(CDX_API, params=params, timeout=30)
+        resp.raise_for_status()
+        rows = resp.json()
+    except Exception as e:
+        print(f"  [CDX error] {e}")
+        return []
+
+    if not rows or len(rows) < 2:
+        return []
+
+    seen = set()
+    urls = []
+    for row in rows[1:]:  # first row is the header
+        raw = row[0]
+        url = "https://" + raw.split("://", 1)[-1].split("?")[0].split("#")[0]
+        if "bbc.co.uk/news/resources/idt-" in url and url not in seen:
+            seen.add(url)
+            urls.append(url)
+
+    print(f"  CDX returned {len(urls)} idt- URLs")
+    return urls
+
+
 def main():
     seeds = load_seeds()
+    cdx_urls = fetch_cdx_urls()
     existing = load_existing()
     # Only pre-load confirmed VJ articles within the date window
     articles_by_url = {a["url"]: a for a in existing if is_visual_journalism(a) and is_after_cutoff(a)}
 
-    # BFS queue: seeds + previously confirmed VJ URLs (to re-check for new cross-links)
-    queue = list(dict.fromkeys([*seeds, *articles_by_url.keys()]))
+    # BFS queue: CDX urls + seeds + previously confirmed VJ URLs (to re-check for new cross-links)
+    queue = list(dict.fromkeys([*cdx_urls, *seeds, *articles_by_url.keys()]))
     visited = set(articles_by_url.keys())  # URLs whose HTML we've already parsed
     scrape_count = 0
 
-    print(f"Seeds: {len(seeds)}  |  Already in data (VJ): {len(articles_by_url)}")
+    print(f"CDX: {len(cdx_urls)}  |  Seeds: {len(seeds)}  |  Already in data (VJ): {len(articles_by_url)}")
 
     while queue:
         url = queue.pop(0)
