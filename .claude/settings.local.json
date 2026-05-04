@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"https://www.bbc.co.uk/robots.txt\")",
+      "Bash(python3 *)"
+    ]
+  }
+}
