@@ -34,3 +34,19 @@ jobs:
           git add data/articles.json docs/index.html
           git diff --cached --quiet || git commit -m "Weekly update $(date -u +%Y-%m-%d)"
           git push
+
+      - name: Read email subject
+        id: subject
+        run: echo "value=$(cat scraper_subject.txt)" >> $GITHUB_OUTPUT
+
+      - name: Send summary email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: ${{ steps.subject.outputs.value }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: BBC Scrolly Tracker <${{ secrets.EMAIL_USERNAME }}>
+          body: file://scraper_summary.txt

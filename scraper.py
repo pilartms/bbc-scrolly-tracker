@@ -14,6 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 
 SEEDS_FILE = "seeds.txt"
+BLOCKLIST_FILE = "blocklist.txt"
 DATA_FILE = "data/articles.json"
 IDT_PATTERN = re.compile(r"idt-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
 BBC_BASE = "https://www.bbc.co.uk"
@@ -28,6 +29,43 @@ HEADERS = {
     ),
     "Accept-Language": "en-GB,en;q=0.9",
 }
+
+
+def write_summary(new_articles, all_articles):
+    run_date = datetime.now(timezone.utc).strftime("%-d %b %Y")
+    n = len(new_articles)
+    if n:
+        subject = f"BBC Scrolly Tracker — {n} new article{'s' if n != 1 else ''} ({run_date})"
+    else:
+        subject = f"BBC Scrolly Tracker — no new articles ({run_date})"
+
+    lines = [subject, "=" * len(subject), ""]
+    if new_articles:
+        lines.append(f"{n} new article{'s' if n != 1 else ''} added:\n")
+        for a in sorted(new_articles, key=lambda x: x.get("published_date") or "", reverse=True):
+            lines.append(f"• {a['title']} ({format_date(a.get('published_date'))})")
+            if a.get("topics"):
+                lines.append(f"  Topics:     {', '.join(a['topics'])}")
+            if a.get("components"):
+                lines.append(f"  Components: {', '.join(a['components'])}")
+            lines.append("")
+    else:
+        lines += ["No new articles were found this week.", ""]
+
+    lines += ["-" * 40, f"Total in tracker: {len(all_articles)} articles"]
+
+    with open("scraper_summary.txt", "w") as f:
+        f.write("\n".join(lines) + "\n")
+    with open("scraper_subject.txt", "w") as f:
+        f.write(subject)
+
+
+def load_blocklist():
+    if not os.path.exists(BLOCKLIST_FILE):
+        return set()
+    with open(BLOCKLIST_FILE) as f:
+        lines = [l.strip() for l in f if l.strip() and not l.startswith("#")]
+    return set(lines)
 
 
 def load_seeds():
@@ -257,21 +295,23 @@ def fetch_cdx_urls():
 def main():
     seeds = load_seeds()
     cdx_urls = fetch_cdx_urls()
+    blocklist = load_blocklist()
     existing = load_existing()
     # Only pre-load confirmed VJ articles within the date window
     articles_by_url = {a["url"]: a for a in existing if is_visual_journalism(a) and is_after_cutoff(a)}
+    existing_urls = set(articles_by_url.keys())
 
     # BFS queue: CDX urls + seeds + previously confirmed VJ URLs (to re-check for new cross-links)
     queue = list(dict.fromkeys([*cdx_urls, *seeds, *articles_by_url.keys()]))
     visited = set(articles_by_url.keys())  # URLs whose HTML we've already parsed
     scrape_count = 0
 
-    print(f"CDX: {len(cdx_urls)}  |  Seeds: {len(seeds)}  |  Already in data (VJ): {len(articles_by_url)}")
+    print(f"CDX: {len(cdx_urls)}  |  Seeds: {len(seeds)}  |  Blocklist: {len(blocklist)}  |  Already in data (VJ): {len(articles_by_url)}")
 
     while queue:
         url = queue.pop(0)
 
-        if url in visited:
+        if url in visited or url in blocklist:
             continue
         visited.add(url)
 
@@ -307,9 +347,11 @@ def main():
         key=lambda a: a.get("published_date") or "",
         reverse=True,
     )
+    new_articles = [a for a in vj_articles if a["url"] not in existing_urls]
     save_data(vj_articles)
-    print(f"\nDone. {len(vj_articles)} VJ articles saved to {DATA_FILE}")
-    print(f"  ({scrape_count} pages fetched this run, {scrape_count - len(articles_by_url) + len(existing)} skipped as non-VJ)")
+    write_summary(new_articles, vj_articles)
+    print(f"\nDone. {len(vj_articles)} VJ articles saved ({len(new_articles)} new).")
+    print(f"  ({scrape_count} pages fetched this run)")
 
 
 if __name__ == "__main__":

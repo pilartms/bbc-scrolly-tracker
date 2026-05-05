@@ -8,6 +8,7 @@ import os
 from datetime import datetime, timezone
 
 DATA_FILE = "data/articles.json"
+MANUAL_DATA_FILE = "data/manual_articles.json"
 OUTPUT_FILE = "docs/index.html"
 
 TOPIC_COLOURS = {
@@ -31,7 +32,13 @@ def load_articles():
     if not os.path.exists(DATA_FILE):
         return []
     with open(DATA_FILE) as f:
-        return json.load(f)
+        articles = json.load(f)
+    if os.path.exists(MANUAL_DATA_FILE):
+        with open(MANUAL_DATA_FILE) as f:
+            manual = json.load(f)
+        existing_urls = {a["url"] for a in articles}
+        articles += [a for a in manual if a["url"] not in existing_urls]
+    return sorted(articles, key=lambda a: a.get("published_date") or "", reverse=True)
 
 
 def format_date(iso_string):
