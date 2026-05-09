@@ -41,6 +41,17 @@ def load_articles():
     return sorted(articles, key=lambda a: a.get("published_date") or "", reverse=True)
 
 
+def format_byline(raw):
+    if not raw:
+        return "–"
+    stripped = raw.strip()
+    if stripped.lower().startswith("by "):
+        stripped = stripped[3:].strip()
+    if stripped:
+        stripped = stripped[0].upper() + stripped[1:]
+    return stripped or "–"
+
+
 def format_date(iso_string):
     if not iso_string:
         return "–"
@@ -78,6 +89,7 @@ def build_rows(articles):
         title = a.get("title") or "Untitled"
         subtitle = a.get("subtitle") or ""
         date = format_date(a.get("published_date"))
+        byline = format_byline(a.get("byline"))
         topics = a.get("topics") or ["World"]
         components = a.get("components") or []
         thumb = a.get("thumbnail") or ""
@@ -103,6 +115,7 @@ def build_rows(articles):
           <p class="subtitle">{subtitle}</p>
         </td>
         <td data-date="{a.get('published_date') or ''}">{date}</td>
+        <td class="byline-cell">{byline}</td>
         <td class="tags-cell">{all_tags}</td>
       </tr>""")
     return "\n".join(rows)
@@ -227,14 +240,14 @@ def render(articles):
     tbody td {{ padding: 0.75rem 1rem; vertical-align: top; }}
 
     .thumb-cell {{
-      width: 120px;
+      width: 175px;
       padding: 0.5rem;
       vertical-align: middle;
       text-align: center;
     }}
     tbody td[data-date] {{ white-space: nowrap; }}
-    .thumb-cell img {{ width: 108px; height: 72px; object-fit: cover; border-radius: 3px; display: block; }}
-    .thumb-cell .no-thumb {{ width: 108px; height: 72px; background: #e8e8e8; border-radius: 3px; margin: 0 auto; }}
+    .thumb-cell img {{ width: 160px; height: 107px; object-fit: cover; border-radius: 3px; display: block; }}
+    .thumb-cell .no-thumb {{ width: 160px; height: 107px; background: #e8e8e8; border-radius: 3px; margin: 0 auto; }}
 
     tbody td a {{ color: #bb1919; text-decoration: none; font-weight: 600; line-height: 1.3; font-size: 0.95rem; }}
     tbody td a:hover {{ text-decoration: underline; }}
@@ -265,6 +278,13 @@ def render(articles):
       background: transparent;
     }}
 
+    .byline-cell {{
+      color: #555;
+      font-size: 0.82rem;
+      width: 160px;
+      max-width: 160px;
+    }}
+
     .no-results-msg {{
       text-align: center;
       padding: 2.5rem 1rem !important;
@@ -292,9 +312,9 @@ def render(articles):
 
     /* ── Tablet (640 – 1023 px) ── */
     @media (max-width: 1023px) {{
-      .thumb-cell {{ width: 64px; padding: 0.4rem; }}
-      .thumb-cell img {{ width: 72px; height: 48px; }}
-      .thumb-cell .no-thumb {{ width: 72px; height: 48px; }}
+      .thumb-cell {{ width: 100px; padding: 0.4rem; }}
+      .thumb-cell img {{ width: 90px; height: 60px; }}
+      .thumb-cell .no-thumb {{ width: 90px; height: 60px; }}
     }}
 
     /* ── Mobile (< 640 px) ── */
@@ -328,10 +348,11 @@ def render(articles):
 
       tbody tr:not(#no-results) {{
         display: grid;
-        grid-template-columns: 88px 1fr;
+        grid-template-columns: 110px 1fr;
         grid-template-areas:
           "thumb title"
           "thumb date"
+          "thumb byline"
           "tags  tags";
         column-gap: 0.75rem;
         row-gap: 0.2rem;
@@ -350,8 +371,8 @@ def render(articles):
         vertical-align: top;
         align-self: start;
       }}
-      .thumb-cell img {{ width: 88px; height: 58px; }}
-      .thumb-cell .no-thumb {{ width: 88px; height: 58px; margin: 0; }}
+      .thumb-cell img {{ width: 100px; height: 67px; }}
+      .thumb-cell .no-thumb {{ width: 100px; height: 67px; margin: 0; }}
 
       tbody tr:not(#no-results) td:nth-child(2) {{
         grid-area: title;
@@ -364,6 +385,16 @@ def render(articles):
         font-size: 0.78rem;
         color: #888;
         align-self: start;
+      }}
+      tbody tr:not(#no-results) .byline-cell {{
+        grid-area: byline;
+        padding: 0;
+        padding-top: 0.2rem;
+        font-size: 0.75rem;
+        color: #888;
+        white-space: normal;
+        width: auto;
+        max-width: none;
       }}
       .tags-cell {{
         grid-area: tags;
@@ -383,7 +414,7 @@ def render(articles):
 </header>
 
 <div class="controls">
-  <input type="search" id="search" placeholder="Filter by title or subtitle…">
+  <input type="search" id="search" placeholder="Filter by title, subtitle or byline…">
   <label>Topic</label>
   <select id="topic-filter">
     <option value="">All</option>
@@ -413,13 +444,14 @@ def render(articles):
         <th></th>
         <th data-col="title">Title</th>
         <th data-col="date">Published</th>
+        <th data-col="byline">Byline</th>
         <th>Tags</th>
       </tr>
     </thead>
     <tbody>
 {rows_html}
       <tr id="no-results" class="hidden">
-        <td colspan="4" class="no-results-msg">No articles match your filters.</td>
+        <td colspan="5" class="no-results-msg">No articles match your filters.</td>
       </tr>
     </tbody>
   </table>
@@ -450,7 +482,7 @@ def render(articles):
     const dateTo = dateToEl.value;
     let visible = 0;
     tbody.querySelectorAll('tr:not(#no-results)').forEach(row => {{
-      const text = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      const text = (row.querySelector('td:nth-child(2)').textContent + ' ' + row.querySelector('.byline-cell').textContent).toLowerCase();
       const topics = JSON.parse(row.dataset.topics || '[]');
       const components = JSON.parse(row.dataset.components || '[]');
       const rowDate = row.querySelector('td[data-date]').dataset.date || '';
@@ -498,6 +530,9 @@ def render(articles):
       if (col === 'date') {{
         av = a.querySelector('td[data-date]').dataset.date || '';
         bv = b.querySelector('td[data-date]').dataset.date || '';
+      }} else if (col === 'byline') {{
+        av = a.querySelector('.byline-cell').textContent.toLowerCase();
+        bv = b.querySelector('.byline-cell').textContent.toLowerCase();
       }} else {{
         av = a.querySelector('td:nth-child(2) a').textContent.toLowerCase();
         bv = b.querySelector('td:nth-child(2) a').textContent.toLowerCase();

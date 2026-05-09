@@ -31,6 +31,16 @@ HEADERS = {
 }
 
 
+def format_date(iso_string):
+    if not iso_string:
+        return "–"
+    try:
+        dt = datetime.fromisoformat(iso_string.replace("Z", "+00:00"))
+        return dt.strftime("%-d %b %Y")
+    except ValueError:
+        return iso_string[:10]
+
+
 def write_summary(new_articles, all_articles):
     run_date = datetime.now(timezone.utc).strftime("%-d %b %Y")
     n = len(new_articles)
@@ -175,6 +185,12 @@ def extract_metadata(url, html):
         if line.lower().startswith("by ") and len(line) < 120:
             byline = line
             break
+
+    # Fallback: dedicated byline element used on some idt- pages
+    if not byline:
+        el = soup.find(class_="sm-article-info__byline-author")
+        if el:
+            byline = el.get_text(strip=True)
 
     article = {
         "url": url,

@@ -97,14 +97,14 @@
     tbody td { padding: 0.75rem 1rem; vertical-align: top; }
 
     .thumb-cell {
-      width: 120px;
+      width: 175px;
       padding: 0.5rem;
       vertical-align: middle;
       text-align: center;
     }
     tbody td[data-date] { white-space: nowrap; }
-    .thumb-cell img { width: 108px; height: 72px; object-fit: cover; border-radius: 3px; display: block; }
-    .thumb-cell .no-thumb { width: 108px; height: 72px; background: #e8e8e8; border-radius: 3px; margin: 0 auto; }
+    .thumb-cell img { width: 160px; height: 107px; object-fit: cover; border-radius: 3px; display: block; }
+    .thumb-cell .no-thumb { width: 160px; height: 107px; background: #e8e8e8; border-radius: 3px; margin: 0 auto; }
 
     tbody td a { color: #bb1919; text-decoration: none; font-weight: 600; line-height: 1.3; font-size: 0.95rem; }
     tbody td a:hover { text-decoration: underline; }
@@ -135,6 +135,13 @@
       background: transparent;
     }
 
+    .byline-cell {
+      color: #555;
+      font-size: 0.82rem;
+      width: 160px;
+      max-width: 160px;
+    }
+
     .no-results-msg {
       text-align: center;
       padding: 2.5rem 1rem !important;
@@ -162,9 +169,9 @@
 
     /* ── Tablet (640 – 1023 px) ── */
     @media (max-width: 1023px) {
-      .thumb-cell { width: 64px; padding: 0.4rem; }
-      .thumb-cell img { width: 72px; height: 48px; }
-      .thumb-cell .no-thumb { width: 72px; height: 48px; }
+      .thumb-cell { width: 100px; padding: 0.4rem; }
+      .thumb-cell img { width: 90px; height: 60px; }
+      .thumb-cell .no-thumb { width: 90px; height: 60px; }
     }
 
     /* ── Mobile (< 640 px) ── */
@@ -198,10 +205,11 @@
 
       tbody tr:not(#no-results) {
         display: grid;
-        grid-template-columns: 88px 1fr;
+        grid-template-columns: 110px 1fr;
         grid-template-areas:
           "thumb title"
           "thumb date"
+          "thumb byline"
           "tags  tags";
         column-gap: 0.75rem;
         row-gap: 0.2rem;
@@ -220,8 +228,8 @@
         vertical-align: top;
         align-self: start;
       }
-      .thumb-cell img { width: 88px; height: 58px; }
-      .thumb-cell .no-thumb { width: 88px; height: 58px; margin: 0; }
+      .thumb-cell img { width: 100px; height: 67px; }
+      .thumb-cell .no-thumb { width: 100px; height: 67px; margin: 0; }
 
       tbody tr:not(#no-results) td:nth-child(2) {
         grid-area: title;
@@ -234,6 +242,16 @@
         font-size: 0.78rem;
         color: #888;
         align-self: start;
+      }
+      tbody tr:not(#no-results) .byline-cell {
+        grid-area: byline;
+        padding: 0;
+        padding-top: 0.2rem;
+        font-size: 0.75rem;
+        color: #888;
+        white-space: normal;
+        width: auto;
+        max-width: none;
       }
       .tags-cell {
         grid-area: tags;
@@ -253,7 +271,7 @@
 </header>
 
 <div class="controls">
-  <input type="search" id="search" placeholder="Filter by title or subtitle…">
+  <input type="search" id="search" placeholder="Filter by title, subtitle or byline…">
   <label>Topic</label>
   <select id="topic-filter">
     <option value="">All</option>
@@ -281,7 +299,7 @@
     <input type="date" id="date-to" min="2024-11-06" max="2026-05-01">
   </div>
   <button class="clear-btn" id="clear-filters">✕ Clear filters</button>
-  <span class="count" id="count">49 articles</span>
+  <span class="count" id="count">50 articles</span>
 </div>
 
 <main>
@@ -291,6 +309,7 @@
         <th></th>
         <th data-col="title">Title</th>
         <th data-col="date">Published</th>
+        <th data-col="byline">Byline</th>
         <th>Tags</th>
       </tr>
     </thead>
@@ -303,6 +322,7 @@
           <p class="subtitle">Stunning images capture the Artemis II astronauts' historic journey from Earth around the Moon for the first time in more than 50 years</p>
         </td>
         <td data-date="2026-05-01T09:09:53.883Z">1 May 2026</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#00838f">Science</span></td>
       </tr>
 
@@ -313,6 +333,7 @@
           <p class="subtitle">Fuel costs have already soared, flights and mortgages are also rising - and food could soon do the same</p>
         </td>
         <td data-date="2026-04-13T11:26:32.194Z">13 Apr 2026</td>
+        <td class="byline-cell">Jemma Crew and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#2e7d32">Business</span> <span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -323,6 +344,7 @@
           <p class="subtitle">Find out about the astronauts and spacecraft involved in Nasa's Artemis II mission - the first time humans have flown to the Moon for fifty years.</p>
         </td>
         <td data-date="2026-04-09T13:27:40.552Z">9 Apr 2026</td>
+        <td class="byline-cell">Rebecca Morelle, Alison Francis, Paul Sargeant and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#00838f">Science</span> <span class="component-tag" style="border-color:#c62828;color:#c62828">3D</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -333,6 +355,7 @@
           <p class="subtitle">How the bombing of Iran sent shockwaves around the world</p>
         </td>
         <td data-date="2026-03-24T14:17:42.299Z">24 Mar 2026</td>
+        <td class="byline-cell">Paul Adams, diplomatic correspondent, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -343,6 +366,7 @@
           <p class="subtitle">What awards season so far tells us about nominees' chances</p>
         </td>
         <td data-date="2026-03-14T03:48:11.147Z">14 Mar 2026</td>
+        <td class="byline-cell">Steven McIntosh and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#6a1b9a">Culture</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -353,6 +377,7 @@
           <p class="subtitle">Iran is using large numbers of low-cost, explosive‑laden Shahed drones in a bid to overwhelm air defences, strike critical infrastructure and spread fear in the region.</p>
         </td>
         <td data-date="2026-03-13T17:22:06.703Z">13 Mar 2026</td>
+        <td class="byline-cell">The Visual Journalism team and Bernd Debusmann Jr</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -363,6 +388,7 @@
           <p class="subtitle">Four White House photos show Donald Trump and his Cabinet as US and Israeli air strikes on Iran unfolded. BBC News breaks down what the images reveal about who was involved - and how the operation played out behind the scenes.</p>
         </td>
         <td data-date="2026-03-10T09:25:16.393Z">10 Mar 2026</td>
+        <td class="byline-cell">The Visual Journalism team and Bernd Debusmann</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -373,6 +399,7 @@
           <p class="subtitle">How the world's biggest carbon emitter is now at the helm of a renewables revolution.</p>
         </td>
         <td data-date="2026-02-20T14:58:52.506Z">20 Feb 2026</td>
+        <td class="byline-cell">Laura Bicker, China correspondent, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#2e7d32">Business</span> <span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -383,6 +410,7 @@
           <p class="subtitle">Sleep apnoea is a disorder where your breathing stops and starts while you sleep with serious health implications - but how do you know if you have it?</p>
         </td>
         <td data-date="2026-01-26T15:56:42.025Z">26 Jan 2026</td>
+        <td class="byline-cell">Ruth Clegg, health and wellbeing reporter, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#e65100">Health</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -393,6 +421,7 @@
           <p class="subtitle">Footage shows how Trump’s troops used devastating strikes to infiltrate Venezuela</p>
         </td>
         <td data-date="2026-01-12T10:59:31.967Z">12 Jan 2026</td>
+        <td class="byline-cell">BBC Verify and BBC Mundo</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -403,6 +432,7 @@
           <p class="subtitle">Archaeologists in the UK have discovered the world's oldest evidence of humans lighting fires</p>
         </td>
         <td data-date="2026-01-08T12:43:44.288Z">8 Jan 2026</td>
+        <td class="byline-cell">Pallab Ghosh, Paul Sargeant and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#00838f">Science</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -413,6 +443,7 @@
           <p class="subtitle">What we know about how a deadly fire engulfed several high-rise apartment buildings in Hong Kong.</p>
         </td>
         <td data-date="2025-12-02T15:59:20.865Z">2 Dec 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -423,6 +454,7 @@
           <p class="subtitle">Why buying gig tickets can be such a challenge and what you can do to maximise your chances of getting one.</p>
         </td>
         <td data-date="2025-11-28T23:57:59.349Z">28 Nov 2025</td>
+        <td class="byline-cell">Chi Chi Izundu, James Stewart and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#2e7d32">Business</span> <span class="topic-tag" style="background:#6a1b9a">Culture</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span></td>
       </tr>
 
@@ -433,6 +465,7 @@
           <p class="subtitle">A visual guide to Donald Trump's unprecedented transformation of the presidential residence.</p>
         </td>
         <td data-date="2025-11-13T09:57:30.294Z">13 Nov 2025</td>
+        <td class="byline-cell">Bernd Debusmann Jr at the White House and Mike Hills in the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -443,6 +476,7 @@
           <p class="subtitle">A minute-by-minute look at the daring Louvre robbery, using maps, photos and video to unravel how one of the world’s most famous museums was breached.</p>
         </td>
         <td data-date="2025-10-24T14:39:09.033Z">24 Oct 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -453,6 +487,7 @@
           <p class="subtitle">The BBC speaks to Palestinians about the things - from the sentimental to the seemingly mundane - they have held close throughout the war</p>
         </td>
         <td data-date="2025-10-23T12:05:10.573Z">23 Oct 2025</td>
+        <td class="byline-cell">Alice Cuddy and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -463,6 +498,7 @@
           <p class="subtitle">One of the longest sets of dinosaur footprints in the world has been discovered in a limestone quarry</p>
         </td>
         <td data-date="2025-10-17T14:19:02.903Z">17 Oct 2025</td>
+        <td class="byline-cell">Rebecca Morelle, Alison Francis, Kevin Church and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#00838f">Science</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -473,6 +509,7 @@
           <p class="subtitle">A visual guide to the Gaza Strip since Israel began its military response to Hamas's attacks on 7 October - mapping the destruction, evacuation orders and how things have changed</p>
         </td>
         <td data-date="2025-10-16T13:17:05.966Z">16 Oct 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -483,7 +520,19 @@
           <p class="subtitle">With a devoted fanbase and continued chart dominance, Taylor Swift appears unstoppable as she unveils her latest album.</p>
         </td>
         <td data-date="2025-10-06T09:38:23.523Z">6 Oct 2025</td>
+        <td class="byline-cell">Mark Savage, music correspondent; Luke Mintz, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#6a1b9a">Culture</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
+      </tr>
+
+      <tr data-topics='["World"]' data-components='["Autoplay video"]'>
+        <td class="thumb-cell"><a href="https://www.bbc.co.uk/news/resources/idt-e26c7357-09f8-42af-81ae-42cbaf04b593" target="_blank" rel="noopener"><img src="https://ichef.bbci.co.uk/images/ic/raw/p0m396vk.jpg" alt="" loading="lazy"></a></td>
+        <td>
+          <a href="https://www.bbc.co.uk/news/resources/idt-e26c7357-09f8-42af-81ae-42cbaf04b593" target="_blank" rel="noopener">The frantic race to protect historic treasures from Israeli bombs</a>
+          <p class="subtitle">As Israel continues its bombardment, Palestinians are trying to protect what remains of Gaza’s ancient artefacts</p>
+        </td>
+        <td data-date="2025-09-23T09:41:12.911Z">23 Sep 2025</td>
+        <td class="byline-cell">Yolande Knell, Middle East correspondent, and the Visual Journalism team</td>
+        <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
       <tr data-topics='["World"]' data-components='["Autoplay video"]'>
@@ -493,6 +542,7 @@
           <p class="subtitle">As warnings about starvation escalate, 20-year-old Mosab al-Trtori shares videos of his daily struggle to find food, water and fuel in Gaza.</p>
         </td>
         <td data-date="2025-09-17T09:17:45.509Z">17 Sep 2025</td>
+        <td class="byline-cell">Alice Cuddy, Malak Hassouneh and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -503,6 +553,7 @@
           <p class="subtitle">The incredible aircraft, vehicles and entourage the US president has brought to London with him.</p>
         </td>
         <td data-date="2025-09-17T08:23:48.999Z">17 Sep 2025</td>
+        <td class="byline-cell">Bernd Debusmann Jr and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#bb1919">UK</span> <span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -513,6 +564,7 @@
           <p class="subtitle">The life and style of the influential Italian fashion designer</p>
         </td>
         <td data-date="2025-09-06T09:36:18.281Z">6 Sep 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#6a1b9a">Culture</span> <span class="topic-tag" style="background:#546e7a">In pictures</span></td>
       </tr>
 
@@ -523,6 +575,7 @@
           <p class="subtitle">It is in no one’s interest to militarise the Arctic but thanks to something of an arms race heating up between the US, Russia and China, that is precisely what looks to be happening.</p>
         </td>
         <td data-date="2025-09-03T12:46:22.752Z">3 Sep 2025</td>
+        <td class="byline-cell">Gordon Corera, BBC security analyst, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span></td>
       </tr>
 
@@ -533,6 +586,7 @@
           <p class="subtitle">100-year-old church moved across Swedish city of Kiruna</p>
         </td>
         <td data-date="2025-08-20T18:35:49.768Z">20 Aug 2025</td>
+        <td class="byline-cell">Erika Benke, in Kiruna, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -543,6 +597,7 @@
           <p class="subtitle">Donald Trump and Vladimir Putin have met in the US state of Alaska for talks on the war in Ukraine. These are the key pictures from the summit.</p>
         </td>
         <td data-date="2025-08-16T03:08:36.655Z">16 Aug 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -553,6 +608,7 @@
           <p class="subtitle">Crowds attend the funeral of Pope Francis in Vatican City attended by leaders from around the world.</p>
         </td>
         <td data-date="2025-08-15T21:17:57.925Z">15 Aug 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -563,6 +619,7 @@
           <p class="subtitle">Investigation by BBC Verify using satellite images and verified footage to show the extent of destruction in Gaza, where the Israeli military have carried out demolitions to raze entire towns and suburbs</p>
         </td>
         <td data-date="2025-08-04T08:38:02.440Z">4 Aug 2025</td>
+        <td class="byline-cell">Benedict Garman, Matt Murphy & the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -573,6 +630,7 @@
           <p class="subtitle">The price of the rare earth metals the world buys from China</p>
         </td>
         <td data-date="2025-07-18T16:23:02.174Z">18 Jul 2025</td>
+        <td class="byline-cell">Laura Bicker and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#2e7d32">Business</span> <span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -583,6 +641,7 @@
           <p class="subtitle">Volatile weather, unusual humidity and the Texan landscape all contributed to scale of destruction</p>
         </td>
         <td data-date="2025-07-08T22:27:32.850Z">8 Jul 2025</td>
+        <td class="byline-cell">–</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#558b2f;color:#558b2f">Autoplay video</span></td>
       </tr>
 
@@ -593,6 +652,7 @@
           <p class="subtitle">Bombed by the US in a dramatic escalation, this mountainside enrichment plant south of Tehran is vital to Iran’s nuclear ambitions, and central to Israel’s efforts to dismantle them.</p>
         </td>
         <td data-date="2025-06-23T15:44:04.468Z">23 Jun 2025</td>
+        <td class="byline-cell">The Visual Journalism team and BBC Verify</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span></td>
       </tr>
 
@@ -603,6 +663,7 @@
           <p class="subtitle">Al-Awda hospital has shut down as Gaza’s health system unravels. In voice notes sent over two weeks, its director documented the collapse - until the moment staff and patients were forced to flee.</p>
         </td>
         <td data-date="2025-06-20T11:55:27.298Z">20 Jun 2025</td>
+        <td class="byline-cell">Alice Cuddy</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -613,6 +674,7 @@
           <p class="subtitle">The US military is rolling into Washington DC for a rare public display of strength to celebrate the army’s 250th anniversary. What can we expect to see and will there be protests?</p>
         </td>
         <td data-date="2025-06-14T09:07:16.424Z">14 Jun 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -623,6 +685,7 @@
           <p class="subtitle">LA's chaotic weekend of protests in maps and pictures after Donald Trump sent immigration agents to round up unauthorised migrants.</p>
         </td>
         <td data-date="2025-06-10T09:26:47.302Z">10 Jun 2025</td>
+        <td class="byline-cell">Emily McGarvey and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -633,6 +696,7 @@
           <p class="subtitle">Nine million cubic metres of rock and ice came crashing down on Blatten after a landslide.</p>
         </td>
         <td data-date="2025-05-30T23:30:03.047Z">30 May 2025</td>
+        <td class="byline-cell">Imogen Foulkes, BBC Geneva Correspondent, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span> <span class="component-tag" style="border-color:#1565c0;color:#1565c0">Scrollable video</span></td>
       </tr>
 
@@ -643,6 +707,7 @@
           <p class="subtitle">The secret conclave that will determine the new Catholic leader and what happens next</p>
         </td>
         <td data-date="2025-05-07T14:50:49.064Z">7 May 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -653,6 +718,7 @@
           <p class="subtitle">We measure this presidency so far on polling, actions, economy and immigration.</p>
         </td>
         <td data-date="2025-04-30T13:43:27.257Z">30 Apr 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -663,6 +729,7 @@
           <p class="subtitle">Defining images of the first Latin American to lead the Catholic Church</p>
         </td>
         <td data-date="2025-04-23T12:34:13.217Z">23 Apr 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -673,6 +740,7 @@
           <p class="subtitle">A 7.7-magnitude earthquake has hit central Myanmar, with tremors felt in Thailand, China and India.</p>
         </td>
         <td data-date="2025-03-31T12:41:51.177Z">31 Mar 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -683,6 +751,7 @@
           <p class="subtitle">Judith Moritz, who has covered the Letby case from the start, takes us inside the evidence to piece together how events unfolded at the Countess of Chester Hospital - and why it took more than a year to stop a killer.</p>
         </td>
         <td data-date="2025-03-20T12:59:45.130Z">20 Mar 2025</td>
+        <td class="byline-cell">Judith Moritz, BBC Special Correspondent, and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#bb1919">UK</span></td>
       </tr>
 
@@ -693,6 +762,7 @@
           <p class="subtitle">Key lines from the King's letter to the US president, with analysis from BBC royal correspondent Sean Coughlan.</p>
         </td>
         <td data-date="2025-02-28T17:31:11.640Z">28 Feb 2025</td>
+        <td class="byline-cell">Sean Coughlan and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#bb1919">UK</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -703,6 +773,7 @@
           <p class="subtitle">After incidents of vital underwater cables in the Baltic Sea being damaged, is British subsea infrastructure exposed to sabotage?</p>
         </td>
         <td data-date="2025-02-20T16:27:51.896Z">20 Feb 2025</td>
+        <td class="byline-cell">BBC Security Correspondent Frank Gardner, Harriet Whitehead and the Visual Journalism Team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#bb1919">UK</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -713,6 +784,7 @@
           <p class="subtitle"></p>
         </td>
         <td data-date="2025-02-13T17:36:14.152Z">13 Feb 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -723,6 +795,7 @@
           <p class="subtitle">A young woman’s return to northern Gaza more than a year after she was forced to flee as a result of the conflict that followed the 7 October attacks.</p>
         </td>
         <td data-date="2025-02-09T11:48:22.682Z">9 Feb 2025</td>
+        <td class="byline-cell">Alice Cuddy and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -733,6 +806,7 @@
           <p class="subtitle">Defining images as 47th US president takes office</p>
         </td>
         <td data-date="2025-01-21T12:18:42.220Z">21 Jan 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -744,6 +818,7 @@
           <p class="subtitle">How helicopter crews are fighting wildfires in Los Angeles</p>
         </td>
         <td data-date="2025-01-17T00:00:00+00:00">17 Jan 2025</td>
+        <td class="byline-cell">Kayla Epstein and the Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -754,6 +829,7 @@
           <p class="subtitle">Powerful images of destruction, loss and heroism</p>
         </td>
         <td data-date="2025-01-14T09:05:25.188Z">14 Jan 2025</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -764,6 +840,7 @@
           <p class="subtitle">Extraordinary images from around the world</p>
         </td>
         <td data-date="2024-12-24T11:47:32.631Z">24 Dec 2024</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#546e7a">In pictures</span> <span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -774,6 +851,7 @@
           <p class="subtitle">Images of delight and despair as the country reflects on the results of the presidential election.</p>
         </td>
         <td data-date="2024-11-06T11:08:07.646Z">6 Nov 2024</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
 
@@ -784,17 +862,18 @@
           <p class="subtitle">An in-depth look at how both candidates could win the election - and the clues that polling trends and history might offer.</p>
         </td>
         <td data-date="2024-11-06T10:51:24.224Z">6 Nov 2024</td>
+        <td class="byline-cell">The Visual Journalism team</td>
         <td class="tags-cell"><span class="topic-tag" style="background:#1a6496">World</span></td>
       </tr>
       <tr id="no-results" class="hidden">
-        <td colspan="4" class="no-results-msg">No articles match your filters.</td>
+        <td colspan="5" class="no-results-msg">No articles match your filters.</td>
       </tr>
     </tbody>
   </table>
 </main>
 
 <footer>
-  Last updated: 5 May 2026, 08:25 UTC &mdash;
+  Last updated: 9 May 2026, 10:30 UTC &mdash;
   Data collected for educational research.
   Articles &copy; BBC.
 </footer>
@@ -818,7 +897,7 @@
     const dateTo = dateToEl.value;
     let visible = 0;
     tbody.querySelectorAll('tr:not(#no-results)').forEach(row => {
-      const text = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+      const text = (row.querySelector('td:nth-child(2)').textContent + ' ' + row.querySelector('.byline-cell').textContent).toLowerCase();
       const topics = JSON.parse(row.dataset.topics || '[]');
       const components = JSON.parse(row.dataset.components || '[]');
       const rowDate = row.querySelector('td[data-date]').dataset.date || '';
@@ -866,6 +945,9 @@
       if (col === 'date') {
         av = a.querySelector('td[data-date]').dataset.date || '';
         bv = b.querySelector('td[data-date]').dataset.date || '';
+      } else if (col === 'byline') {
+        av = a.querySelector('.byline-cell').textContent.toLowerCase();
+        bv = b.querySelector('.byline-cell').textContent.toLowerCase();
       } else {
         av = a.querySelector('td:nth-child(2) a').textContent.toLowerCase();
         bv = b.querySelector('td:nth-child(2) a').textContent.toLowerCase();
