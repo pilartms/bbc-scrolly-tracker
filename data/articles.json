@@ -1,5 +1,18 @@
 [
   {
+    "url": "https://www.bbc.co.uk/news/resources/idt-715ff936-f52a-429d-bb35-d1940d7f6111",
+    "title": "Attenborough: The risk-taker who changed how we see Earth",
+    "subtitle": "A celebration of the career of Sir David Attenborough on his 100th birthday in video, audio and pictures.",
+    "published_date": "2026-05-11T11:27:00.622Z",
+    "thumbnail": "https://ichef.bbc.co.uk/images/ic/raw/p0njyrjn.jpg",
+    "byline": "By the Visual Journalism team",
+    "discovered_at": "2026-05-11T15:57:11.465133+00:00",
+    "topics": [
+      "World"
+    ],
+    "components": []
+  },
+  {
     "url": "https://www.bbc.co.uk/news/resources/idt-16b00b19-21d0-4108-96e8-38bb7e4846c6",
     "title": "In pictures: Artemis II’s spectacular Moon mission, from launch to dramatic splashdown photos",
     "subtitle": "Stunning images capture the Artemis II astronauts' historic journey from Earth around the Moon for the first time in more than 50 years",
@@ -621,6 +634,19 @@
     "thumbnail": "https://ichef.bbci.co.uk/images/ic/raw/p0kkbfzw.png",
     "byline": "By Kayla Epstein and the Visual Journalism team",
     "discovered_at": "2026-05-04T18:28:13.023707+00:00",
+    "topics": [
+      "World"
+    ],
+    "components": []
+  },
+  {
+    "url": "https://bbc.co.uk/news/resources/idt-7391e1a7-968a-4cf3-aa2a-d79c0ff994c3",
+    "title": "Fighting LA's fires from the sky\n",
+    "subtitle": "How helicopter crews are fighting wildfires in Los Angeles",
+    "published_date": "2025-01-17T00:00:00+00:00",
+    "thumbnail": "https://ichef.bbci.co.uk/images/ic/raw/p0kkbfzw.png",
+    "byline": "By Kayla Epstein and the Visual Journalism team",
+    "discovered_at": "2026-05-11T15:57:20.936155+00:00",
     "topics": [
       "World"
     ],
