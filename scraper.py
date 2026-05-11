@@ -300,6 +300,7 @@ def fetch_cdx_urls():
     for row in rows[1:]:  # first row is the header
         raw = row[0]
         url = "https://" + raw.split("://", 1)[-1].split("?")[0].split("#")[0]
+        url = url.replace("https://bbc.co.uk/", "https://www.bbc.co.uk/")
         if "bbc.co.uk/news/resources/idt-" in url and url not in seen:
             seen.add(url)
             urls.append(url)
