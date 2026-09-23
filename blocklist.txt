@@ -4,3 +4,6 @@
 
 # Not a scrollytelling piece (BBC Visual and Data Journalism team, not VJ scrolly)
 https://www.bbc.co.uk/news/resources/idt-2d84756f-4264-4be0-8f84-63125570e286
+
+# Xinjiang Police Files - published May 2022; the 2026 date on the page is spurious, so it slipped past the date cutoff
+https://www.bbc.co.uk/news/resources/idt-8df450b3-5d6d-4ed8-bdcc-bd99137eadc3
